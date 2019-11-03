@@ -20,15 +20,17 @@ type AppConfiguration struct {
 func initAppConfig() (*viper.Viper, error) {
 	vc := viper.New()
 	var err error
+	var configFileName string
 
 	vc.AutomaticEnv()
 	processEnv := vc.GetString("ENV")
 
 	if !(len(processEnv) > 0) {
-		return nil, fmt.Errorf("No ENV received")
+		fmt.Println("No ENV received, defaulting to dev")
+		configFileName = "env_dev"
+	} else {
+		configFileName = "env_" + processEnv
 	}
-
-	configFileName := "env_" + processEnv
 
 	vc.SetConfigName(configFileName)     //e.g. env_dev.yaml
 	vc.SetConfigType("yaml")             //config file type

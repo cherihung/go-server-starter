@@ -7,3 +7,4 @@ Golang server starter with [Gin Tonic](https://github.com/gin-gonic/gin).
 - Handles CORS supporting Gin's trailing slash redirect feature
 - Enable configuration by envs using Viper
 - Supporting SSL for prod
+- Docker setup

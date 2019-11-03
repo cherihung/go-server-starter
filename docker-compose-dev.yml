@@ -1,0 +1,10 @@
+version: '3'
+services:
+  go-server:
+    build:
+      context: .
+      dockerfile: _dockers/Dockerfile_dev
+    image: go-server-dev:${VERSION}
+    container_name: go-server-box-dev
+    ports:
+      - "9000:9000"

@@ -51,7 +51,7 @@ func main() {
 	var serverErr error
 
 	r := setupRouter()
-	addr := fmt.Sprintf("%s:%d", appConfigs.Host, appConfigs.Port)
+	addr := fmt.Sprintf(":%d", appConfigs.Port)
 
 	server := &http.Server{
 		Addr:    addr,
