@@ -3,8 +3,8 @@
 go-server-starter
 
 # certs and keys
-*.crt
-*.key
+_certs/*
+!_certs/.gitkeep
 
 # binaries for programs and plugins
 *.exe

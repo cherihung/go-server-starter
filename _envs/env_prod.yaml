@@ -1,0 +1,4 @@
+host: "localhost"
+port: 4500
+ssl: true
+release_mode: true

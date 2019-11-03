@@ -1,0 +1,4 @@
+host: "localhost"
+port: 9000
+ssl: false
+release_mode: false
