@@ -12,6 +12,3 @@ _certs/*
 *.dll
 *.so
 *.dylib
-
-# directors
-vendor/*
