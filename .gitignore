@@ -1,0 +1,17 @@
+# build files
+
+go-server-starter
+
+# certs and keys
+*.crt
+*.key
+
+# binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# directors
+vendor/*
