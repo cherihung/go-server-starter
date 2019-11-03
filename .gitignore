@@ -12,3 +12,5 @@ _certs/*
 *.dll
 *.so
 *.dylib
+
+/vendor
