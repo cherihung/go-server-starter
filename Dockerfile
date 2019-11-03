@@ -11,15 +11,16 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix -o ${MODULE_NAME}
 
 FROM alpine AS final
 
-ENV ENV=dev
+ARG ENV
+RUN echo $ENV
 
 WORKDIR /src
 
 COPY --from=builder /workspace/go-server-starter .
-COPY --from=builder /workspace/_envs/env_${ENV}.yaml ./_envs/
+COPY --from=builder /workspace/_envs/env_$ENV.yaml ./_envs/
+COPY --from=builder /workspace/_certs/server.crt ./_certs/
+COPY --from=builder /workspace/_certs/server.key ./_certs/
 
 CMD [ "./go-server-starter" ]
-
-EXPOSE 9000
 
 

@@ -1,10 +1,11 @@
-version: '3'
+version: '3.5'
 services:
   go-server:
     build:
+      args:
+        - ENV=prod
       context: .
-      dockerfile: _dockers/Dockerfile
     image: go-server:${VERSION}
     container_name: go-server-box
     ports:
-      - "4500:4500"
+      - "8000:9000"
