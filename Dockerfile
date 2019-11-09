@@ -1,13 +1,11 @@
-FROM golang:alpine AS builder
+FROM cherihung01/golang-builder:alpine AS builder
 LABEL stage=builder
-
-RUN apk add --no-cache gcc libc-dev
 
 WORKDIR /workspace
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix -o ${MODULE_NAME}
+RUN GOFLAGS=-mod=vendor CGO_ENABLED=0 GOOS=linux go build -a -installsuffix -o ${MODULE_NAME}
 
 FROM alpine AS final
 
