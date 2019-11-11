@@ -41,10 +41,23 @@ func setupRouter() *gin.Engine {
 
 	router.Use(middleware.CORSMiddleware())
 
-	router.GET("/", handler.Default)
-	router.GET("/.well-known/health", handler.HealthCheck)
+	initializeCommonRoutes()
+	initializeHeroRoutes()
 
 	return router
+}
+
+func initializeCommonRoutes() {
+	router.GET("/", handler.Default)
+	router.GET("/.well-known/health", handler.HealthCheck)
+}
+
+func initializeHeroRoutes() {
+	route := router.Group("/heros")
+	{
+		route.GET("/", handler.GetHeros)
+		route.GET("/:id", handler.GetHeroByID)
+	}
 }
 
 func main() {

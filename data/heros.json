@@ -1,0 +1,51 @@
+[
+  {
+    "last_name": "Howlett",
+    "first_name": "Logan",
+    "hero_name": "Wolverine",
+    "family": "Marvel",
+    "uid": 0
+  },
+  {
+    "last_name": "stark",
+    "first_name": "tony",    
+    "hero_name": "Ironman",
+    "family": "Marvel",
+    "uid": 1
+  },
+  {
+    "last_name": "Parker",
+    "first_name": "Peter",
+    "hero_name": "Spiderman",
+    "family": "Marvel",
+    "uid": 2
+  },
+  {
+    "last_name": "banner",
+    "first_name": "Bruce",
+    "hero_name": "hulk",
+    "family": "Marvel",
+    "uid": 3
+  },
+  {
+    "last_name": "wayne",
+    "first_name": "bruce",
+    "hero_name": "Batman",
+    "family": "DC",
+    "uid": 4
+  },
+  {
+    "last_name": "kent",
+    "first_name": "clark",
+    "hero_name": "Superman",
+    "family": "DC",
+    "uid": 5
+  },
+  {
+    "last_name": "Allen",
+    "first_name": "Barry",
+    "hero_name": "Flash",
+    "family": "DC",
+    "uid": 6
+  }
+]
