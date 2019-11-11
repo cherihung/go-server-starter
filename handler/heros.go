@@ -44,6 +44,8 @@ func GetHeroByID(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, selectedHero)
 }
 
+/* PRIVATE */
+
 func readHerosToFile() []Hero {
 	file, err := ioutil.ReadFile("data/heros.json")
 

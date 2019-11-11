@@ -17,6 +17,27 @@ type AppConfiguration struct {
 	ReleaseMode bool   `mapstructure:"release_mode"`
 }
 
+//GetAppConfiguration returns pointer to appConfig
+func GetAppConfiguration() *AppConfiguration {
+	return &appConfigs
+}
+
+//NewAppConfiguration called by main() upon server init
+func NewAppConfiguration() (*AppConfiguration, error) {
+	vc, err := initAppConfig()
+	if err != nil {
+		return nil, fmt.Errorf("cannot read from config file: %s", err)
+	}
+
+	if err := vc.Unmarshal(&appConfigs); err != nil {
+		return nil, fmt.Errorf("failed to parse config file %s", err)
+	}
+
+	return &appConfigs, nil
+}
+
+/* PRIVATE */
+
 func initAppConfig() (*viper.Viper, error) {
 	vc := viper.New()
 	var err error
@@ -39,23 +60,4 @@ func initAppConfig() (*viper.Viper, error) {
 	err = vc.ReadInConfig()
 
 	return vc, err
-}
-
-//GetAppConfiguration returns pointer to appConfig
-func GetAppConfiguration() *AppConfiguration {
-	return &appConfigs
-}
-
-//NewAppConfiguration called by main() upon server init
-func NewAppConfiguration() (*AppConfiguration, error) {
-	vc, err := initAppConfig()
-	if err != nil {
-		return nil, fmt.Errorf("cannot read from config file: %s", err)
-	}
-
-	if err := vc.Unmarshal(&appConfigs); err != nil {
-		return nil, fmt.Errorf("failed to parse config file %s", err)
-	}
-
-	return &appConfigs, nil
 }
