@@ -40,7 +40,7 @@ func setupRouter() *gin.Engine {
 	router = gin.Default()
 	router.RedirectTrailingSlash = false
 
-	router.Use(middleware.CORSMiddleware())
+	router.Use(middleware.CORSMiddleware(appConfigs.AllowedOrigin))
 
 	initializeCommonRoutes()
 	initializeHeroRoutes()

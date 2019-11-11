@@ -11,10 +11,11 @@ var appConfigs AppConfiguration
 
 //AppConfiguration struct defining vars in _envs/
 type AppConfiguration struct {
-	Host        string `mapstructure:"host"`
-	Port        int    `mapstructure:"port"`
-	SSL         bool   `mapstructure:"ssl"`
-	ReleaseMode bool   `mapstructure:"release_mode"`
+	Host          string `mapstructure:"host"`
+	Port          int    `mapstructure:"port"`
+	SSL           bool   `mapstructure:"ssl"`
+	ReleaseMode   bool   `mapstructure:"release_mode"`
+	AllowedOrigin string `mapstructure:"allowed_origin"`
 }
 
 //GetAppConfiguration returns pointer to appConfig

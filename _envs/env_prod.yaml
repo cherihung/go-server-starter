@@ -1,3 +1,4 @@
 port: 4500
 ssl: true
 release_mode: true
+allowed_origin: "http://localhost:1234"
