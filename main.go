@@ -38,6 +38,7 @@ func init() {
 func setupRouter() *gin.Engine {
 
 	router = gin.Default()
+	router.RedirectTrailingSlash = false
 
 	router.Use(middleware.CORSMiddleware())
 
@@ -55,7 +56,7 @@ func initializeCommonRoutes() {
 func initializeHeroRoutes() {
 	route := router.Group("/heros")
 	{
-		route.GET("/", handler.GetHeros)
+		route.GET("", handler.GetHeros)
 		route.GET("/id/:id", handler.GetHeroByID)
 		route.GET("/family/:name", handler.GetHerosByFamily)
 	}
