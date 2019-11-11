@@ -21,27 +21,19 @@ type Hero struct {
 
 //GetHeros handler returning all heros
 func GetHeros(ctx *gin.Context) {
-	file, err := ioutil.ReadFile("data/heros.json")
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	var data []Hero
-	json.Unmarshal([]byte(file), &data)
+	data := readHerosToFile()
 	ctx.JSON(http.StatusOK, data)
 }
 
 //GetHeroByID handler return hero by uid
 func GetHeroByID(ctx *gin.Context) {
-	file, err := ioutil.ReadFile("data/heros.json")
 	id, err := strconv.Atoi(ctx.Param("id"))
+
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	var data []Hero
-	json.Unmarshal([]byte(file), &data)
+	data := readHerosToFile()
 	var selectedHero Hero
 	for i := range data {
 		if data[i].UID == id {
@@ -50,4 +42,16 @@ func GetHeroByID(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, selectedHero)
+}
+
+func readHerosToFile() []Hero {
+	file, err := ioutil.ReadFile("data/heros.json")
+
+	if err != nil {
+		log.Fatal("reading json file error: ", err)
+	}
+
+	var data []Hero
+	json.Unmarshal([]byte(file), &data)
+	return data
 }
