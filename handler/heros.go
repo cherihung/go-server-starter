@@ -71,17 +71,29 @@ func GetHerosByFamily(ctx *gin.Context) {
 
 func searchHerosByAnyName(ctx *gin.Context, data []Hero) {
 
-	term := strings.ToLower(ctx.Query("name"))
-
 	var selectedHeros []Hero
+	var terms []string
+
+	// ?name=anyname
+	rawTerms := strings.ToLower(ctx.Query("name"))
+	// ?name=firstname,lastname
+	byRealName := strings.ContainsAny(",", rawTerms)
+	// ["firstname", "lastname"]
+	terms = strings.Split(rawTerms, ",")
 
 	for i := range data {
 		heroName := strings.ToLower(data[i].HeroName)
 		lastName := strings.ToLower(data[i].LastName)
 		firstName := strings.ToLower(data[i].FirstName)
 
-		if heroName == term || lastName == term || firstName == term {
-			selectedHeros = append(selectedHeros, data[i])
+		if byRealName {
+			if firstName == terms[0] && lastName == terms[1] {
+				selectedHeros = append(selectedHeros, data[i])
+			}
+		} else {
+			if heroName == terms[0] || lastName == terms[0] || firstName == terms[0] {
+				selectedHeros = append(selectedHeros, data[i])
+			}
 		}
 	}
 
