@@ -56,7 +56,8 @@ func initializeHeroRoutes() {
 	route := router.Group("/heros")
 	{
 		route.GET("/", handler.GetHeros)
-		route.GET("/:id", handler.GetHeroByID)
+		route.GET("/id/:id", handler.GetHeroByID)
+		route.GET("/family/:name", handler.GetHerosByFamily)
 	}
 }
 

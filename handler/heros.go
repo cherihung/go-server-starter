@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -22,10 +23,16 @@ type Hero struct {
 //GetHeros handler returning all heros
 func GetHeros(ctx *gin.Context) {
 	data := readHerosToFile()
+
+	if len(ctx.Request.URL.Query()) > 0 {
+		searchHerosByAnyName(ctx, data)
+		return
+	}
+
 	ctx.JSON(http.StatusOK, data)
 }
 
-//GetHeroByID handler return hero by uid
+//GetHeroByID handler return hero by uid: /hero/id/1
 func GetHeroByID(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 
@@ -44,7 +51,42 @@ func GetHeroByID(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, selectedHero)
 }
 
+//GetHerosByFamily handler returns all heros by family name: /heros/family/marvel
+func GetHerosByFamily(ctx *gin.Context) {
+	term := strings.ToLower(ctx.Param("name"))
+
+	data := readHerosToFile()
+	var selectedHeros []Hero
+
+	for i := range data {
+		if strings.ToLower(data[i].Family) == term {
+			selectedHeros = append(selectedHeros, data[i])
+		}
+	}
+
+	ctx.JSON(http.StatusOK, selectedHeros)
+}
+
 /* PRIVATE */
+
+func searchHerosByAnyName(ctx *gin.Context, data []Hero) {
+
+	term := strings.ToLower(ctx.Query("name"))
+
+	var selectedHeros []Hero
+
+	for i := range data {
+		heroName := strings.ToLower(data[i].HeroName)
+		lastName := strings.ToLower(data[i].LastName)
+		firstName := strings.ToLower(data[i].FirstName)
+
+		if heroName == term || lastName == term || firstName == term {
+			selectedHeros = append(selectedHeros, data[i])
+		}
+	}
+
+	ctx.JSON(http.StatusOK, selectedHeros)
+}
 
 func readHerosToFile() []Hero {
 	file, err := ioutil.ReadFile("data/heros.json")
