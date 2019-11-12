@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"log"
+	"math/rand"
 	"net/http"
 	"strconv"
 	"strings"
@@ -13,11 +14,11 @@ import (
 
 //Hero struct
 type Hero struct {
-	Family    string
+	Family    string `json:"family" binding:"required"`
 	UID       int
-	HeroName  string `json:"hero_name"`
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
+	HeroName  string `json:"hero_name" binding:"required"`
+	FirstName string `json:"first_name" binding:"required"`
+	LastName  string `json:"last_name" binding:"required"`
 }
 
 //GetHeros handler returning all heros
@@ -65,6 +66,23 @@ func GetHerosByFamily(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, selectedHeros)
+}
+
+//AddNewHero handler adds a new hero via POST to /heros/add
+func AddNewHero(ctx *gin.Context) {
+	var newHero Hero
+	if err := ctx.ShouldBindJSON(&newHero); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"add failed": err.Error()})
+		return
+	}
+
+	// mimic database creating a uid
+	min := 10
+	max := 50
+	newHero.UID = rand.Intn(max-min) + min
+
+	// return added hero in response
+	ctx.JSON(http.StatusOK, newHero)
 }
 
 /* PRIVATE */

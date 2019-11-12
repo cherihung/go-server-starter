@@ -66,6 +66,7 @@ func initializeHeroRoutes() {
 		route.GET("", handler.GetHeros)
 		route.GET("/id/:id", handler.GetHeroByID)
 		route.GET("/family/:name", handler.GetHerosByFamily)
+		route.POST("/add", handler.AddNewHero)
 	}
 }
 
