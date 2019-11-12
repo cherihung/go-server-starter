@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -37,7 +38,13 @@ func init() {
 
 func setupRouter() *gin.Engine {
 
-	router = gin.Default()
+	// router = gin.Default()
+	router = gin.New()
+	//	router.Use(gin.Logger())
+	router.Use(gin.LoggerWithFormatter(middleware.CustomLogger))
+
+	router.Use(gin.Recovery())
+
 	router.RedirectTrailingSlash = false
 
 	router.Use(middleware.CORSMiddleware(appConfigs.AllowedOrigin))
@@ -64,6 +71,12 @@ func initializeHeroRoutes() {
 
 func main() {
 	var serverErr error
+
+	/* log operation */
+	gin.DisableConsoleColor()
+	f, _ := os.Create("gin.log")
+	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
+	/* end log operation */
 
 	r := setupRouter()
 	addr := fmt.Sprintf(":%d", appConfigs.Port)
